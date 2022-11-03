@@ -23,6 +23,13 @@ namespace DatingApp.Api.Controllers
             return users;
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<AppUser> GetUser(int id)
+        {
+            var users = _context.AppUser.Find(id);
+
+            return users;
+        }
 
     }
 }

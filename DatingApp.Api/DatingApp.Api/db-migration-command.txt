@@ -1,0 +1,4 @@
+-- to create database
+ Update-Database
+- update migration
+  Add-Migration
