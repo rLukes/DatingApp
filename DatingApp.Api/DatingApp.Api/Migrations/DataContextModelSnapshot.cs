@@ -43,7 +43,7 @@ namespace DatingApp.Api.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUser");
+                    b.ToTable("AppUser", (string)null);
                 });
 #pragma warning restore 612, 618
         }
