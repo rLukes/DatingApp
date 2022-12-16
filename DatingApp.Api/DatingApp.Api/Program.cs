@@ -1,35 +1,30 @@
-using DatingApp.Api.Data;
-using DatingApp.Api.Interfaces;
-using DatingApp.Api.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using DatingApp.Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Add services to the container.
-builder.Services.AddDbContext<DataContext>(options => options.UseSqlServer(connectionString));
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
-            ValidateIssuer = false,
-            ValidateAudience= false
-        };
-    });
+//builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
+
+builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddIdentityServices(builder.Configuration);
+
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.TokenValidationParameters = new TokenValidationParameters
+//        {
+//            ValidateIssuerSigningKey = true,
+//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenKey"])),
+//            ValidateIssuer = false,
+//            ValidateAudience= false
+//        };
+//    });
 
 var app = builder.Build();
 
